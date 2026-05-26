@@ -69,6 +69,7 @@ const addTask = () => {
 
   // Re-render the list
   renderTasks();
+  saveTasks();
 };
 
 // ---- TOGGLE COMPLETE ----
@@ -76,6 +77,7 @@ const toggleTask = (index) => {
   // Flip the completed value
   tasks[index].completed = !tasks[index].completed;
   renderTasks();
+  saveTasks();
 };
 
 // ---- DELETE TASK ----
@@ -83,6 +85,7 @@ const deleteTask = (index) => {
   // Remove task from array using filter
   tasks = tasks.filter((_, i) => i !== index);
   renderTasks();
+  saveTasks();
 };
 
 // ---- UPDATE COUNTER ----
@@ -117,3 +120,16 @@ taskList.addEventListener("click", (e) => {
     deleteTask(Number(index));
   }
 });
+// Save tasks to Local Storage
+const saveTasks = () => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+// Load tasks from Local Storage
+const loadTasks = () => {
+  const saved = localStorage.getItem("tasks");
+  tasks = saved ? JSON.parse(saved) : [];
+};
+// At the very bottom of your file
+loadTasks();
+renderTasks();
